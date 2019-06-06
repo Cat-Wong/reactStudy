@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello word</title>
+</head>
+<!-- 加载 React。-->
+<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script type="text/babel">
+    let root = document.getElementById('root')
+    let dom = <h1>Hello, world!</h1>
+
+    ReactDOM.render(
+        dom,
+        root);
+</script>
+</html>
