@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>事件处理</title>
+  </head>
+  <!-- 加载 React。-->
+  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <body>
+    <div id="root"></div>
+    <div id="demo"></div>
+    <div id="demo1"></div>
+    <div id="demo2"></div>
+  </body>
+
+  <script type="text/babel">
+    const root = document.getElementById('root')
+    const demo = document.getElementById('demo')
+    const demo1 = document.getElementById('demo1')
+    const demo2 = document.getElementById('demo2')
+
+    class Toggle extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          hp: 100,
+          addNum: ''
+        }
+        // this.add = this.add.bind(this)
+      }
+
+      //一。这个写法如果没有this.add = this.add.bind(this)
+      // 那么在add 的方法里的this 就不是组件的this了
+      //二。或者使用箭头函数
+      // add() {
+      //   this.setState(state => ({
+      //     hp: hp + addNum
+      //   }))
+      // }
+      // 三。
+      // class LoggingButton extends React.Component {
+      //   handleClick() {
+      //     console.log('this is:', this)
+      //   }
+      //   render() {
+      //     // 此语法确保 `handleClick` 内的 `this` 已被绑定。
+      //     return <button onClick={e => this.handleClick(e)}>Click me</button>
+      //   }
+      // }
+
+      //<button onClick={(e) => this.deleteRow(id, e)}>Delete Row</button>
+      // <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
+ 
+      add = () => {
+        this.setState(state => ({
+          hp: this.state.hp + Number(this.state.addNum)
+        }))
+      }
+
+      changeVal = event => {
+        event.persist() //如果你想异步访问事件属性，你需在事件上调用 event.persist()，此方法会从池中移除合成事件，允许用户代码保留对事件的引用。
+        console.log(event)
+        this.setState({
+          addNum: event.target.value
+        })
+        // console.log(this.state)
+      }
+
+      render() {
+        return (
+          <div>
+            <span>当前你的等级:{this.state.hp}</span> <br />
+            充值金额：
+            <input
+              type="text"
+              placeholder="冲多少加多少"
+              value={this.state.addNum}
+              onChange={this.changeVal}
+            />
+            <br />
+            确定充值金额： <span>{this.state.addNum}</span>
+            <br />
+            <button onClick={this.add}>充钱变强</button>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Toggle />, root)
+  </script>
+</html>

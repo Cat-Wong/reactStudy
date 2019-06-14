@@ -46,10 +46,12 @@
         clearInterval(this.timerID)
       }
       tick() {
-        this.setState({
+        // this.setState({
+        //   date: new Date().toLocaleTimeString()
+        // })
+        this.setState((state)=>({
           date: new Date().toLocaleTimeString()
-        })
-        // this.setState(())
+        }))
       }
       render() {
         return (
