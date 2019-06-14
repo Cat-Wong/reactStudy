@@ -1,51 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>State和生命周期</title>
-</head>
-<!-- 加载 React。-->
-<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
-<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<!-- Don't use this in production: -->
-<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <!-- 加载 React。-->
+  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
-<body>
-<div id="root"></div>
-<div id="demo"></div>
-<div id="demo1"></div>
-<div id="demo2"></div>
-<div id="demo3"></div>
-</body>
+  <body>
+    <div id="root"></div>
+    <div id="demo"></div>
+    <div id="demo1"></div>
+    <div id="demo2"></div>
+    <div id="demo3"></div>
+  </body>
 
-<script type="text/babel">
+  <script type="text/babel">
     const root = document.getElementById('root')
     const demo = document.getElementById('demo')
     const demo1 = document.getElementById('demo1')
     const demo2 = document.getElementById('demo2')
     const demo3 = document.getElementById('demo3')
 
-    class Tick extends React.Component {   //组件首字母一定大写
-        render(){
-            return <div>
-                <h1>
-                    it's Time : {this.props.date} <br/>
-                    {this.props.item}
-                </h1>
-            </div>
-        }
-    }
-    const test = () =>{
-        ReactDOM.render(
-            <Tick date={new Date().toLocaleTimeString()} item="这是传入的item文字"/>,
-            root
+    class Tick extends React.Component {
+      //组件首字母一定大写
+      constructor(props) {
+        // constructor 是一种用于创建和初始化class创建的对象的特殊方法。
+        super(props)
+        //super关键字用于访问和调用一个对象的父对象上的函数。
+        this.state = { date: new Date().toLocaleTimeString() }
+      }
+
+      componentDidMount() {
+        // alert('第一次渲染')
+        //componentDidMount在第一次渲染后调用，只在客户端。之后组件已经生成了对应的DOM结构，可以通过this.getDOMNode()来进行访问。 如果你想和其他JavaScript框架一起使用，可以在这个方法中调用setTimeout, setInterval或者发送AJAX请求等操作(防止异步操作阻塞UI)。
+        this.timerID = setInterval(() => this.tick(), 1000)
+      }
+      componentWillUnmount() {
+        // alert('移除组件')
+        //componentWillUnmount在组件从 DOM 中移除之前立刻被调用
+        clearInterval(this.timerID)
+      }
+      tick() {
+        this.setState({
+          date: new Date().toLocaleTimeString()
+        })
+        // this.setState(())
+      }
+      render() {
+        return (
+          <div>
+            <h1>
+              it's Time : {this.state.date} <br />
+              {this.props.item}
+            </h1>
+          </div>
         )
+      }
     }
-    setInterval(test,1000)
 
+    class App extends React.Component {
+      render() {
+        return (
+          <div>
+            <Tick item="这是item文字" />
+            <Tick item="这是item文字" />
+            <Tick item="这是item文字" />
+          </div>
+        )
+      }
+    }
 
+    ReactDOM.render(<App/>, root)
 
+    // 小笔记
 
-</script>
+    //  this.state  //默认参数
+    // class Counter extends React.Component {
+    //   constructor(props) {
+    //     super(props);
+    //     this.state = {count: props.initialCount};
+    //   }
+    // }
+    //  如果使用class 来创建组件，可以通过 this.state 来定义组件的初始 state
+
+    // this.setState
+    // this.setState({comment: 'Hello'});
+    //steate 不用通过直接赋值来 渲染组件，需要用 setState()方法跟新   （感觉作用像vue的$set()）
+
+    // props 和 state 可能是异步更新的，所以可以让setSate()接收一个函数
+    //  eg1:
+    //  this.setState((a,b)=>{
+    //    Sum: a + b
+    // })
+    //  eg2:
+    // this.setState(function (a,b) {
+    //   return {
+    //      sum: a + b
+    //   }
+    // })
+  </script>
 </html>
