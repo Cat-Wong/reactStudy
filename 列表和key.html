@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>列表和key</title>
+</head>
+<!-- 加载 React。-->
+<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<style>
+    .box {
+        width: 500px;
+        height: 500px;
+        text-align: center;
+        line-height: 500px;
+        border: 1px solid red;
+    }
+</style>
+
+<body>
+    <div id="root"></div>
+    <div id="demo"></div>
+    <div id="demo1"></div>
+    <div id="demo2"></div>
+
+</body>
+
+<script type="text/babel">
+    const root = document.getElementById('root')
+    const demo = document.getElementById('demo')
+    const demo1 = document.getElementById('demo1')
+    const demo2 = document.getElementById('demo2')
+
+
+
+    const arr = ['六脉神剑','北冥神功','凌波微步','一阳指']
+    
+
+    // =======渲染多个组件=============
+    const arrDom = arr.map( (item,index) =>{
+        return <li key={index}>{item}--这是map渲染后的 demo</li>
+    })
+
+    ReactDOM.render(
+        <ul>{arrDom}</ul>,
+        root
+    )
+
+
+    // ========基础列表组件==========
+    class List extends React.Component {
+      render() {
+        const lists = this.props.list.map((item,index)=>{
+         //如果列表项目的顺序可能会变化，我们不建议使用索引来用作 key 值，因为这样做会导致性能变差，还可能引起组件状态的问题。可以看看 Robin Pokorny 的深度解析使用索引作为 key 的负面影响 这一篇文章。如果你选择不指定显式的 key 值，那么 React 将默认使用索引用作为列表项目的 key 值、
+            return <li key={index}>{item}--这是通过组件map渲染的</li>
+        })
+        return (
+          <ul>
+            {lists}
+          </ul>
+        )
+      }
+    }
+    ReactDOM.render(<List list={arr}/>, demo)
+
+//   =========在 JSX 中嵌入 map()====================
+
+    class NumberList extends React.Component {
+      render() {
+        return (
+          <ul>
+            {this.props.list.map((item,index)=>{
+              return <li key={index}>{item}--这是jsp中嵌入的map</li>
+            })}
+          </ul>
+        )
+      }
+    }
+    ReactDOM.render(<NumberList list={arr}/>, demo1)
+
+  </script>
+
+</html>
