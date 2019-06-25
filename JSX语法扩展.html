@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>JSX</title>
-</head>
-<!-- 加载 React。-->
-<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
-<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<!-- Don't use this in production: -->
-<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <!-- 加载 React。-->
+  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
-<body>
-<div id="root"></div>
-<div id="demo"></div>
-<div id="demo1"></div>
-<div id="demo2"></div>
-</body>
+  <body>
+    <div id="root"></div>
+    <div id="demo"></div>
+    <div id="demo1"></div>
+    <div id="demo2"></div>
+  </body>
 
-<script type="text/babel">
+  <script type="text/babel">
     const root = document.getElementById('root')
     const demo = document.getElementById('demo')
     const demo1 = document.getElementById('demo1')
@@ -26,51 +26,37 @@
 
     // 嵌入表达式
     const name = 'sasuke'
-    const dom = (<h1>nanuto,and {name}</h1>)
-    ReactDOM.render(
-        dom,
-        root
-    )
+    const dom = <h1>nanuto,and {name}</h1>
+    ReactDOM.render(dom, root)
 
     // =======
-    const nameFn = (name,age)=>{
-        return <h1>
-            name:{name} <br/>
-            age:{age}
+    const nameFn = (name, age) => {
+      return (
+        <h1>
+          name:{name} <br />
+          age:{age}
         </h1>
+      )
     }
-    ReactDOM.render(
-        nameFn('sasuke',18),
-        demo
-    )
-// ===========  便利渲染
-    const nameArr = ['nanuto','sasuke','i`am']
-    const nameArrFn = nameArr.map((item,index)=>{    //在react 中map时，也需要一个key，唯一值 
-         //如果列表项目的顺序可能会变化，我们不建议使用索引来用作 key 值，因为这样做会导致性能变差，还可能引起组件状态的问题。可以看看 Robin Pokorny 的深度解析使用索引作为 key 的负面影响 这一篇文章。如果你选择不指定显式的 key 值，那么 React 将默认使用索引用作为列表项目的 key 值
-        return  <li key={index}>人物：{item}</li>
+    ReactDOM.render(nameFn('sasuke', 18), demo)
+    // ===========  便利渲染
+    const nameArr = ['nanuto', 'sasuke', 'i`am']
+    const nameArrFn = nameArr.map((item, index) => {
+      //在react 中map时，也需要一个key，唯一值
+      //如果列表项目的顺序可能会变化，我们不建议使用索引来用作 key 值，因为这样做会导致性能变差，还可能引起组件状态的问题。可以看看 Robin Pokorny 的深度解析使用索引作为 key 的负面影响 这一篇文章。如果你选择不指定显式的 key 值，那么 React 将默认使用索引用作为列表项目的 key 值
+      return <li key={index}>人物：{item}</li>
     })
-    ReactDOM.render(
-        <ul>
-            {nameArrFn}
-        </ul>,
-        demo1
-    )
+    ReactDOM.render(<ul>{nameArrFn}</ul>, demo1)
 
-// ==============更新渲染元素
+    // ==============更新渲染元素
     let a = 0
-    const change = ()=>{
-        a++
-        if(a>60){
-            a = 0
-        }
-        ReactDOM.render(
-            <div>{a}</div>,
-            demo2
-        )
+    const change = () => {
+      a++
+      if (a > 60) {
+        a = 0
+      }
+      ReactDOM.render(<div>{a}</div>, demo2)
     }
-    setInterval(change,100)
-
-
-
-</script>
+    setInterval(change, 100)
+  </script>
 </html>
