@@ -32,7 +32,7 @@
     const demo3 = document.getElementById('demo3')
 
 
-    //=======包含关系===========
+    //=======包含关系===========  (props.children) 
     class FatherDom extends React.Component{
       constructor(props) {
         super(props)
@@ -65,11 +65,45 @@
       }
     }
 
-
     ReactDOM.render(
       <ChilderDom/>,
       root
     )
+
+
+    // =========自定义传入名称===========
+    function Left() {
+      return(
+        <div>我是上边的div</div>
+      )
+    }
+    function Right(){
+      return(
+        <div>我是下边的div</div>
+      )
+    }
+    class DomOne extends React.Component{
+      render(){
+        return(
+          <div>
+            <div>{this.props.leftDom}</div>
+            <div>{this.props.rightDom}</div>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(  //注意下面传入的参数要已dom的形式传入
+      //right leftDom={<Left/>}       // wrong  leftDom={Left} 
+      <DomOne leftDom={<Left/>} rightDom={<Right/>}/>,   
+      demo
+    )
+
+    // =================
+
+    
+
+    
 
   </script>
 
