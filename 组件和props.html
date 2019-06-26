@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>组件和props</title>
-</head>
-<!-- 加载 React。-->
-<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
-<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<!-- Don't use this in production: -->
-<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+  <!-- 加载 React。-->
+  <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
-<body>
-<div id="root"></div>
-<div id="demo"></div>
-<div id="demo1"></div>
-<div id="demo2"></div>
-<div id="demo3"></div>
-</body>
+  <body>
+    <div id="root"></div>
+    <div id="demo"></div>
+    <div id="demo1"></div>
+    <div id="demo2"></div>
+    <div id="demo3"></div>
+  </body>
 
-<script type="text/babel">
+  <script type="text/babel">
     const root = document.getElementById('root')
     const demo = document.getElementById('demo')
     const demo1 = document.getElementById('demo1')
@@ -28,64 +28,58 @@
 
     // ======函数组件和class组件
     function Fn(props) {
-        return <h1>Hello, {props.name}</h1>;
+      return <h1>Hello, {props.name}</h1>
     }
     ReactDOM.render(
-        Fn({
-            name:'我是函数传参'
-        }),
-        root
+      Fn({
+        name: '我是函数传参'
+      }),
+      root
     )
 
     class Welcome extends React.Component {
-        render() {
-            return <h1>Hello, {this.props.name}</h1>;
-        }
+      render() {
+        return <h1>Hello, {this.props.name}</h1>
+      }
     }
-    ReactDOM.render(
-        <Welcome name="我是class组件传参"/>,
-        demo
-    )
+    ReactDOM.render(<Welcome name="我是class组件传参" />, demo)
 
     //==============渲染组件
-    class ElementFn extends React.Component {   //组件首字母必须大写!!!!!!(要记得)
-        render() {
-            return <h1>Hello, {this.props.name}</h1>;
-        }
+    class ElementFn extends React.Component {
+      //组件首字母必须大写!!!!!!(要记得)
+      render() {
+        return <h1>Hello, {this.props.name}</h1>
+      }
     }
-    const element = <ElementFn name="我是element传进来的参数"/>
-    ReactDOM.render(
-        element,
-        demo1
-    )
+    const element = <ElementFn name="我是element传进来的参数" />
+    ReactDOM.render(element, demo1)
 
     // =========组合组件，组件复用
     const text = '我是element传进来的参数3'
-    class App extends React.Component{
-        render (){
-            return (
-                 <div>
-                    <ElementFn name="我是element传进来的参数1"/>
-                    <ElementFn name="我是element传进来的参数2"/>
-                    <ElementFn name={text} class="testClass"/>
-                </div>
-                // ===相邻的JSX元素必须包装在一个封闭标记中,这个地方必须用标签包起来
-            )
-        }
+    class App extends React.Component {
+      render() {
+        return (
+          <div>
+            <ElementFn name="我是element传进来的参数1" />
+            <ElementFn name="我是element传进来的参数2" />
+            <ElementFn name={text} class="testClass" />
+          </div>
+          // ===相邻的JSX元素必须包装在一个封闭标记中,这个地方必须用标签包起来
+        )
+      }
     }
-    ReactDOM.render(
-        <App/>,
-        demo1
-    )
+    ReactDOM.render(<App />, demo1)
 
     // =================Props 的只读性
     // 所有组件的 Props 需要像纯函数一样，保护入参不被更改
-    function sum(a, b) {   //没有改变传入参数，所以这个是个纯函数
-        return a + b;
+    function sum(a, b) {
+      //没有改变传入参数，所以这个是个纯函数
+      return a + b
     }
-    function change(a,b) {   //不是纯函数，改变了入参
-        a = a + b
+    function change(a, b) {
+      //不是纯函数，改变了入参
+      a = a + b
     }
     //test
-</script>
+  </script>
 </html>

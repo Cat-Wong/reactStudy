@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>组件和props</title>
+</head>
+<!-- 加载 React。-->
+<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+<style>
+  .childDom{
+    border: 1px solid red;
+  }
+</style>
+<body>
+  <div id="root"></div>
+  <div id="demo"></div>
+  <div id="demo1"></div>
+  <div id="demo2"></div>
+  <div id="demo3"></div>
+</body>
+
+<script type="text/babel">
+    const root = document.getElementById('root')
+    const demo = document.getElementById('demo')
+    const demo1 = document.getElementById('demo1')
+    const demo2 = document.getElementById('demo2')
+    const demo3 = document.getElementById('demo3')
+
+
+    //=======包含关系===========
+    class FatherDom extends React.Component{
+      constructor(props) {
+        super(props)
+      }
+      render(){
+        //下面 props.children 就是父组件里嵌套的dom节点， 就是 class 为 childDom 的节点
+        return(
+          <div>
+            后面跟着的是props参数{this.props.val} <br/>
+            {this.props.children}  
+          </div>
+        )
+      } 
+    }
+
+    class ChilderDom extends React.Component{
+      constructor(props){
+        super(props)
+      }
+      render(){
+        return(
+          <FatherDom val="我是props的传参">
+          <div className="childDom">
+              <h1>
+                我是父节点包含的dom
+              </h1>
+           </div>
+          </FatherDom>
+        )
+      }
+    }
+
+
+    ReactDOM.render(
+      <ChilderDom/>,
+      root
+    )
+
+  </script>
+
+</html>

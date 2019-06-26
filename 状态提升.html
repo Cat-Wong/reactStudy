@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>状态提升</title>
+</head>
+<!-- 加载 React。-->
+<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<body>
+  <div id="root"></div>
+  <div id="demo"></div>
+  <div id="demo1"></div>
+  <div id="demo2"></div>
+  <div id="demo3"></div>
+</body>
+
+<script type="text/babel">
+    const root = document.getElementById('root')
+    const demo = document.getElementById('demo')
+    const demo1 = document.getElementById('demo1')
+    const demo2 = document.getElementById('demo2')
+    const demo3 = document.getElementById('demo3')
+
+    class ChangWen extends React.Component{   //判断 水温的组件
+      constructor(props){
+        super(props)
+      }
+      render(){
+        if(this.props.test >= 100){  //传进来的水温
+          return( <div>水温大于100烧开了</div>
+        )
+        }else{
+          return(<div>水温小于100，没烧开</div>)
+        }
+      }
+    }
+
+    const obj = {
+      s:'摄氏温度',
+      h:'华氏温度'
+    }
+
+    class ShuRu extends React.Component{
+      constructor(props){
+        super(props)
+        // this.state = {temperature:''}  //state 方法
+      }
+      changFn =(event)=>{
+        event.persist()
+        // this.setState({temperature:event.target.value}) //state 方法 
+        this.props.newValChage(event.target.value) //props方法  
+  
+      }
+      render(){
+        // const temperature = this.state.temperature   //state 方法//填入的温度
+        const temperature = this.props.newVal //修改为传入的温度 
+        const scale = this.props.scale   //是哪个温度
+        return(
+          <div>
+            {obj[scale]}：<input value={temperature} onChange={this.changFn}/>  <br/>
+          </div>
+        )
+      }
+    }
+
+
+    function toCelsius(fahrenheit) {   //转摄氏
+      return (fahrenheit - 32) * 5 / 9;
+    }
+
+    function toFahrenheit(celsius) {   //转华氏
+      return (celsius * 9 / 5) + 32;
+    }
+
+
+    function tryConvert(temperature, convert) {  //第一个参数是温度，第二个参数是使用哪个转的方法
+      const input = parseFloat(temperature);
+      if (Number.isNaN(input)) {
+        return '';
+      }
+      const output = convert(input);
+      const rounded = Math.round(output * 1000) / 1000;
+      return rounded.toString();
+    }
+
+
+    class Model extends  React.Component{  //两个温度计合为一个组件
+      constructor(props) {
+        super(props)
+        this.state = {temperature: '',scale:''};
+      }
+
+      changeSFn=(val)=>{
+        this.setState((state)=>({
+          temperature:val,
+          scale:'s'
+        }))
+      }
+
+      changeHFn=(val)=>{
+        this.setState((state)=>({
+          temperature:val,
+          scale:'h'
+        }))
+      }
+
+      render(){
+        const temperature = this.state.temperature
+        const scale = this.state.scale
+        const sVlaue = scale === 'h' ? tryConvert(temperature, toCelsius) : temperature;  //温度转为摄氏温度
+        const hVlaue = scale === 's' ? tryConvert(temperature, toFahrenheit) : temperature;   //温度转为华氏温度
+
+        return(
+          <div>
+              <ShuRu scale='s' newVal={sVlaue} newValChage={this.changeSFn}/>  
+              <ShuRu scale='h' newVal={hVlaue} newValChage={this.changeHFn}/>
+              <ChangWen test={temperature}/>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(
+      <Model/>,
+      root
+    )
+
+    //总结。状态提升就感觉类似 变量提升
+    //本来应该在子组件使用子组件单独state的值。
+    //变成父组件传进来的props 的值，就能使子组件公用一个变量
+    
+
+
+  </script>
+
+</html>

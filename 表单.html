@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>表单</title>
+</head>
+<!-- 加载 React。-->
+<!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- Don't use this in production: -->
+<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+<body>
+  <div id="root"></div>
+  <div id="demo"></div>
+  <div id="demo1"></div>
+  <div id="demo2"></div>
+  <div id="demo3"></div>
+</body>
+
+<script type="text/babel">
+    const root = document.getElementById('root')
+    const demo = document.getElementById('demo')
+    const demo1 = document.getElementById('demo1')
+    const demo2 = document.getElementById('demo2')
+    const demo3 = document.getElementById('demo3')
+
+    class TanwanLanyue extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {value:''}
+      }
+
+      changeFn = (event)=>{
+         event.persist()
+          // this.setState((state)=>({
+          //   value:event.target.value
+          // }))
+          this.setState({value:event.target.value})
+      }
+
+      clickFn = ()=>{
+        alert('原来是'+this.state.value+',失敬失敬')
+      }
+      render =()=>{
+        return (
+          <div>
+            来贪玩蓝月，是兄弟就来砍我 <br/>
+            大佬怎么称呼啊？ <br/>
+            <input type="text" value={this.state.value} placeholder="请输入你的昵称" onChange={this.changeFn}/> <br/>
+            <button onClick={this.clickFn}>提交</button> <br/>
+            </div>
+          )
+      }
+    }
+
+    ReactDOM.render(<TanwanLanyue/>, root)
+    
+  </script>
+
+</html>
