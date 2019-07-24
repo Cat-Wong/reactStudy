@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>State和生命周期</title>
+    <title>Context</title>
   </head>
   <!-- 加载 React。-->
   <!-- 注意: 部署时，将 "development.js" 替换为 "production.min.js"。-->
@@ -26,6 +26,109 @@
     const demo2 = document.getElementById('demo2')
     const demo3 = document.getElementById('demo3')
 
-    
+    // ============官方======
+
+    // Context 可以让我们无须明确地传遍每一个组件，就能将值深入传递进组件树。
+    // 为当前的 theme 创建一个 context（“light”为默认值）。
+
+    // class App extends React.Component {
+    //   render() {
+    //     // 使用一个 Provider 来将当前的 theme 传递给以下的组件树。
+    //     // 无论多深，任何组件都能读取这个值。
+    //     // 在这个例子中，我们将 “dark” 作为当前的值传递下去。
+    //     return (
+    //       <div>
+    //         <ThemeContext.Provider value="dark">
+    //         <Toolbar />
+    //       </ThemeContext.Provider>
+    //       </div>
+    //     )
+    //   }
+    // }
+    // // 中间的组件再也不必指明往下传递 theme 了。
+    // function Toolbar(props) {
+    //   return (
+    //     <div>
+    //       <ThemedButton />
+    //     </div>
+    //   )
+    // }
+    // class ThemedButton extends React.Component {
+    //   // 指定 contextType 读取当前的 theme context。
+    //   // React 会往上找到最近的 theme Provider，然后使用它的值。
+    //   // 在这个例子中，当前的 theme 值为 “dark”。
+    //   static contextType = ThemeContext
+    //   render() {
+    //     return <div theme={this.context} >{this.context}</div>
+    //   }
+    // }
+
+
+    // // =================入门=  直接使用
+    // const Mytext = React.createContext('赵日天') //首先申明一个context对象
+
+    // //孙子组件
+    // class App extends React.Component {
+    //   static contextType = Mytext //然后在class 上挂在 contextType 的静态属性，并重新赋值为context对象
+    //   render() {
+    //     return <div>你的名字是:{this.context.name}</div>  //this.context 现在就是context对象
+    //   }
+    // }
+    // ReactDOM.render(<App />, root)
+
+
+    //=========================简单的使用方法
+    const Mytext = React.createContext('赵日天') //首先申明一个context对象，给定一个默认值   ===========React.createContext
+    //孙子组件
+    class App extends React.Component {
+      static contextType = Mytext //然后在class 上挂在 contextType 的静态属性，并重新赋值为context对象      ===============Class.contextType
+      render() {
+        return(
+          <div>
+            <div>你的名字是:{this.context.name}</div>
+            <Mytext.Consumer>
+              {newValue => (
+                <span>
+                 你的年龄是： {newValue.age}
+                </span>
+              )}
+            </Mytext.Consumer>
+         </div>
+        ) 
+        //接受到Provider传递下来的值。  //如果没有对应的Provider传值，那么vlue 等于 createContext 的默认值     =============Context.Consumer  
+      }
+    }
+    //子组件
+    class One extends React.Component {
+      render() {
+        return (
+          <div>
+            <span>One组件</span>
+            <App />
+          </div>
+        )
+      }
+    }
+    //父组件
+    class Two extends React.Component {
+      render() {
+        const user = {
+          name:'刘大哥',
+          sex:'man',
+          age:20
+        }
+        //context.Provider 用于更新context 的值   =============Context.Provider
+        return (
+          <div>
+            <span>Two组件</span>
+            <Mytext.Provider value={user}>
+              <One />
+            </Mytext.Provider>
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<Two />, root)
   </script>
 </html>
