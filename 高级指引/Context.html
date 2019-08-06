@@ -78,7 +78,11 @@
 
 
     //=========================简单的使用方法
-    const Mytext = React.createContext('赵日天') //首先申明一个context对象，给定一个默认值   ===========React.createContext
+    const Mytext = React.createContext({
+      name:'赵日天'，
+      age:18,
+      sex:'man'
+    }) //首先申明一个context对象，给定一个默认值   ===========React.createContext
     //孙子组件
     class App extends React.Component {
       static contextType = Mytext //然后在class 上挂在 contextType 的静态属性，并重新赋值为context对象      ===============Class.contextType
