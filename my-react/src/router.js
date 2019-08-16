@@ -2,8 +2,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // 引入页面
-import Home from './pages/home';
-import Page from './pages/page';
+// import Home from './pages/home';
+// import Page from './pages/page';
+// 引入页面（修改后）
+import Home from '@/pages/home';
+import Page from '@/pages/page';
 
 
 // 路由

@@ -1,6 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
+
 module.exports = {
   /*入口*/
   entry: path.join(__dirname, '../src/index.js'),
@@ -38,6 +42,26 @@ module.exports = {
   },
   /*devtool优化*/
   devtool: 'inline-source-map',
+  /*路径优化 使用webpack提供的alias */
+  resolve: {
+    alias: {
+      '@': resolve('src'), 
+      '&': resolve('src/components'),
+      'api': resolve('src/api'),
+      'assets': resolve('src/assets'), 
+       pages: path.join(__dirname, '../src/pages'),
+       components: path.join(__dirname, '../src/components'),
+       router: path.join(__dirname, '../src/router')
+    }
+  },
+
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': resolve('src')
+    }
+  },
+
   /*HtmlWebpackPlugin优化*/
   plugins: [new HtmlWebpackPlugin({
     filename: 'index.html',
