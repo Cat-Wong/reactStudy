@@ -49,6 +49,8 @@ module.exports = {
       '&': resolve('src/components'),
       'api': resolve('src/api'),
       'assets': resolve('src/assets'), 
+      'actions': resolve('src/redux/actions'), 
+      'reducers': resolve('src/redux/reducers'), 
        pages: path.join(__dirname, '../src/pages'),
        components: path.join(__dirname, '../src/components'),
        router: path.join(__dirname, '../src/router')
