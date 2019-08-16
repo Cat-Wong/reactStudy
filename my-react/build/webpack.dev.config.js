@@ -12,6 +12,7 @@ module.exports = {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js'
   },
+  /*babel*/
   module: {
     rules: [{
       test: /\.js$/,
@@ -35,6 +36,9 @@ module.exports = {
     },
     port: 8000 // 端口
   },
+  /*devtool优化*/
+  devtool: 'inline-source-map',
+  /*HtmlWebpackPlugin优化*/
   plugins: [new HtmlWebpackPlugin({
     filename: 'index.html',
     template: path.join(__dirname, '../src/index.html')
