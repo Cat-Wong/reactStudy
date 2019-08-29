@@ -16,6 +16,7 @@ module.exports = {
     path: path.join(__dirname, '../dist'),
     filename: 'bundle.js'
   },
+
   /*babel*/
   module: {
     rules: [{
@@ -24,6 +25,7 @@ module.exports = {
       loader: "babel-loader"
     }]
   },
+
   // webpack-dev-server
   devServer: {
     contentBase: path.join(__dirname, '../dist'),
@@ -40,27 +42,22 @@ module.exports = {
     },
     port: 8000 // 端口
   },
+
+
   /*devtool优化*/
   devtool: 'inline-source-map',
   /*路径优化 使用webpack提供的alias */
   resolve: {
+    extensions: ['.js', '.vue', '.json'],
     alias: {
       '@': resolve('src'), 
       '&': resolve('src/components'),
-      'api': resolve('src/api'),
-      'assets': resolve('src/assets'), 
       'actions': resolve('src/redux/actions'), 
       'reducers': resolve('src/redux/reducers'), 
-       pages: path.join(__dirname, '../src/pages'),
-       components: path.join(__dirname, '../src/components'),
-       router: path.join(__dirname, '../src/router')
-    }
-  },
-
-  resolve: {
-    extensions: ['.js', '.vue', '.json'],
-    alias: {
-      '@': resolve('src')
+      'pages': resolve('src/pages'), 
+      'components': resolve('src/components'), 
+      'router': resolve('src/router')
+      //  pages: path.join(__dirname, '../src/pages')
     }
   },
 
