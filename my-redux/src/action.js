@@ -8,5 +8,5 @@ export const minFn = {
 
 export const todoFn = {
   type: 'ADD_TODO',
-  text:'555'
+  text:'this is add text'
 }

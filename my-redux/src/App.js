@@ -23,7 +23,7 @@ const counter = (state = initState.counter, action) => {
 
 
 
-const todo = (state = initState.todos, action) => {
+const todoA = (state = initState.todos, action) => {
   switch (action.type) {
     case 'ADD_TODO':
       return state.concat([action.text])
@@ -33,11 +33,10 @@ const todo = (state = initState.todos, action) => {
 }
 
 
-
 //生成store
 const store = createStore(combineReducers({
   counter,
-  todo
+  todoA
 }))
 console.log(store.getState())
 
