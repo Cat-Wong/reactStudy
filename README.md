@@ -429,14 +429,3 @@ import Page from '@/pages/page';
 ```
 
 ### redux
-- 安装
-
-```
-npm install react-redux -S
-```
-
-- 创建文件
-
-在scr目录下创建`redux`目录
-
-创建`actions`和`reducers`两个文件夹，分别创建`counter.js`文件

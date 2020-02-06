@@ -28,7 +28,7 @@ module.exports = {
 
   // webpack-dev-server
   devServer: {
-    contentBase: path.join(__dirname, '../dist'),
+    // contentBase: path.join(__dirname, '../dist'),
     compress: true,  // gzip压缩
     host: '0.0.0.0', // 允许ip访问
     hot: true, // 热更新
@@ -57,13 +57,17 @@ module.exports = {
       'pages': resolve('src/pages'), 
       'components': resolve('src/components'), 
       'router': resolve('src/router')
-      //  pages: path.join(__dirname, '../src/pages')
     }
   },
 
   /*HtmlWebpackPlugin优化*/
   plugins: [new HtmlWebpackPlugin({
+    minify: { // 压缩HTML文件
+      removeComments: true, // 移除HTML中的注释
+      collapseWhitespace: true, // 删除空白符与换行符
+      minifyCSS: true// 压缩内联css
+    },
     filename: 'index.html',
-    template: path.join(__dirname, '../src/index.html')
+    template: path.join(__dirname, '../public/index.html')
   })],
 };
