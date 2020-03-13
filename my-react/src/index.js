@@ -23,6 +23,7 @@ ReactDom.render(
 //     <div>Hello React11!</div>, document.getElementById('app')); 
 // ReactDom.render(
 //   <Router>
+//test
 //       <Nav/>
 //       {getRouter()}
 //   </Router>,
