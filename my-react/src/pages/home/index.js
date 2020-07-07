@@ -1,9 +1,10 @@
 import React from 'react'
+import style from './style.less'
 
-class Home extends React.PureComponent{
-  render(){
+class Home extends React.PureComponent {
+  render() {
     return (
-      <div>
+      <div className={style.nameDiv}>
         this is home
       </div>
     )

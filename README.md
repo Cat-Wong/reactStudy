@@ -1,17 +1,17 @@
-- -D等于--save-dev -S等于--save
-- -D和-S两者区别：-D是你开发时候依赖的东西，--S 是你发布之后还依赖的东西
-- -g是全局安装，方便我们后面使用webpack命令（全局安装后依然不能使用的小伙伴，检查下自己的环境变量PATH）
-- npm  install 简写npm i
+- -D 等于--save-dev -S 等于--save
+- -D 和-S 两者区别：-D 是你开发时候依赖的东西，--S 是你发布之后还依赖的东西
+- -g 是全局安装，方便我们后面使用 webpack 命令（全局安装后依然不能使用的小伙伴，检查下自己的环境变量 PATH）
+- npm install 简写 npm i
 
-### init项目  
+### init 项目
 
 ```
-npm init  
+npm init
 ```
+
 可以填写项目信息，或者一路回车
 
-
-### webpack  
+### webpack
 
 ```
 npm install -g webpack  全局安装webpack
@@ -19,10 +19,8 @@ npm install webpack -D
 npm install webpack-cli -D
 ```
 
-
 - 根目录创建`build`文件夹
--  新建`webpack.dev.config.js`
-
+- 新建`webpack.dev.config.js`
 
 ```
 const path = require('path');
@@ -37,17 +35,17 @@ module.exports = {
 };
 ```
 
-
--  根目录创建`src`文件夹
--  新建`index.js`
+- 根目录创建`src`文件夹
+- 新建`index.js`
 
 ```
 document.getElementById('app').innerHTML = "Hello Word";
 ```
 
-### 测试webpack打包
--  根目录创建`dist`文件夹
--  新建`index.html`
+### 测试 webpack 打包
+
+- 根目录创建`dist`文件夹
+- 新建`index.html`
 
 ```
 <!doctype html>
@@ -62,6 +60,7 @@ document.getElementById('app').innerHTML = "Hello Word";
 </body>
 </html>
 ```
+
 运行命令
 `webpack --config ./build/webpack.dev.config.js`
 
@@ -70,7 +69,8 @@ document.getElementById('app').innerHTML = "Hello Word";
 接下来在浏览器打开 `dist`文件下的 `index.html` 就可以看到 hello word 了
 
 ### mode
-webpack4需要我们指定mode的类型来区分开发环境和生产环境
+
+webpack4 需要我们指定 mode 的类型来区分开发环境和生产环境
 
 `webpack.dev.config.js`里面添加`mode`属性
 
@@ -80,11 +80,13 @@ mode:'development',
 ```
 
 ### babel
-babel是高级版本的JavaScript 向下编译成兼容版本的JavaScript
+
+babel 是高级版本的 JavaScript 向下编译成兼容版本的 JavaScript
 
 这一过程叫做“源码到源码”编译， 也被称为转换编译。
 
 - 安装
+
 ```
 npm install @babel/core @babel/preset-env @babel/preset-react babel-loader -D
 ```
@@ -102,6 +104,7 @@ module.exports = babelConfig;
 ```
 
 2.新建`babel`配置文件`.babelrc`
+
 ```
   {
     "presets": [
@@ -113,7 +116,7 @@ module.exports = babelConfig;
   }
 ```
 
-- webpack配置
+- webpack 配置
 
 在`webpack.dev.config.js` 中增加 `babel-loader`
 
@@ -142,6 +145,7 @@ module: {
 ```
 
 在执行打包命令
+
 ```
 webpack --config ./build/webpack.dev.config.js
 ```
@@ -149,6 +153,7 @@ webpack --config ./build/webpack.dev.config.js
 刷新 `dist` 下的`index.html`
 
 ### react
+
 - 安装
 
 ```
@@ -174,6 +179,7 @@ ReactDom.render(
 刷新 `dist` 下的`index.html`
 
 ### 打包命令优化
+
 修改`package.json` 下的`script`对象，增加`build`属性
 
 ```
@@ -185,19 +191,22 @@ ReactDom.render(
 
 ### 启动命令优化
 
-之前使用的是本地磁盘路径，并不是ip+端口的形式，
+之前使用的是本地磁盘路径，并不是 ip+端口的形式，
 
-接下来我们引入webpack-dev-server来启动一个简单的服务器。
+接下来我们引入 webpack-dev-server 来启动一个简单的服务器。
 
-- 安装 
+- 安装
+
 ```
 npm i webpack-dev-server -D
 ```
+
 - 修改`webpack.dev.config.js`，增加`webpack-dev-server`配置
+
 ```
 // webpack-dev-server
 devServer: {
-    contentBase: path.join(__dirname, '../dist'), 
+    contentBase: path.join(__dirname, '../dist'),
     compress: true,  // gzip压缩
     host: '0.0.0.0', // 允许ip访问
     hot:true, // 热更新
@@ -207,10 +216,13 @@ devServer: {
 新建启动命令 修改packpage.json
 "dev": "webpack-dev-server --config ./build/webpack.dev.config.js",
 ```
+
 现在想要运行项目直接 `npm run dev` 就行了
 
 ### react-router
+
 - 安装
+
 ```
 npm install --save react-router-dom
 ```
@@ -220,12 +232,12 @@ npm install --save react-router-dom
 在`src`下新建`pages`文件夹。然后在新建`home`和`page`两个文件夹，分别在里面新建`index.js`
 
 ```
-   src    
-    └─pages                
-      │      
+   src
+    └─pages
+      │
       ├─home
       │  │   index.js
-      │      
+      │
       └─page
          │  index.js
 
@@ -288,9 +300,10 @@ export default ()=>{
   )
 }
 ```
-注：使用Link组件改变当前路由
 
-- 接下来在是`src` 新建 `router.js `
+注：使用 Link 组件改变当前路由
+
+- 接下来在是`src` 新建 `router.js`
 
 ```
 import React from 'react';
@@ -330,12 +343,14 @@ ReactDom.render(
 ```
 
 - 测试
+
 ```
  npm run dev
 ```
 
-### proxy代理
-devServer下有个proxy属性可以设置我们的代理
+### proxy 代理
+
+devServer 下有个 proxy 属性可以设置我们的代理
 
 ```
   // webpack-dev-server
@@ -354,34 +369,32 @@ devServer下有个proxy属性可以设置我们的代理
 
 在`localhost:8000` 上有后端服务的话，你可以这样启用代理
 
-请求到` /api/users` 现在会被代理到请求`http://localhost:8000/users`（注意这里的第二个属性，它将'/api'替换成了''）
+请求到`/api/users` 现在会被代理到请求`http://localhost:8000/users`（注意这里的第二个属性，它将'/api'替换成了''）
 
 `changeOrigin: true`可以帮我们解决跨域的问题。
-
-
 
 ```
 // cheap-module-eval-source-map is faster for development
   devtool: config.dev.devtool,
 ```
 
+### devtool 优化
 
-### devtool优化
-当启动报错或者像打断点的时候，会发现打包后的代码无从下手。我们在webpack里面添加
+当启动报错或者像打断点的时候，会发现打包后的代码无从下手。我们在 webpack 里面添加
 
-然后就可以在srouce里面能看到我们写的代码，也能打断点调试哦~
+然后就可以在 srouce 里面能看到我们写的代码，也能打断点调试哦~
 
 ```
 devtool: 'inline-source-map'
 ```
 
-
 ### 文件路径优化
-使用webpack提供的alias 别名配置
+
+使用 webpack 提供的 alias 别名配置
 
 看这里：切记名称不可声明成你引入的其他包名
 
-别名的会覆盖你的包名，导致你无法引用其他包。举个栗子：redux、react等
+别名的会覆盖你的包名，导致你无法引用其他包。举个栗子：redux、react 等
 
 ```
 //=======
@@ -402,13 +415,13 @@ function resolve(dir) {
 
 resolve: {
     alias: {
-      '@': resolve('src'), 
+      '@': resolve('src'),
       '&': resolve('src/components'),
       'api': resolve('src/api'),
       'assets': resolve('src/assets')
     }
   },
-    
+
 ```
 
 然后 router.js 的路径就可以修改为
@@ -429,3 +442,111 @@ import Page from '@/pages/page';
 ```
 
 ### redux
+
+详细访问 reduxStudy
+
+[https://github.com/Cat-Wong/reduxStudy](https://github.com/Cat-Wong/reduxStudy)
+
+### Html-Webpack-Plugin
+
+plugin 是 webpack 的扩展功能（构建相关）
+
+作用有两个.
+
+1. 为 html 文件中引入的外部资源，如：script，link 等，每次添加 compile 后的 hash，防止引用缓存
+2. 生成 html 的入口文件，比如单页面生成一个 html 文件入口，配置多个 plugin 可以生成多个
+
+- 安装
+
+```
+    npm i html-webpack-plugin -D
+```
+
+- 注释`webpack`下的`contentBase`配置
+- 根目录下新建`pubilc`目录
+- 将`dist`目录下的 html 模板放到`pubilc`
+- 接下来，在 webpack.dev.config.js 加入 plugin 的配置,去掉 html 模板内 bundle.js 的引入
+
+```
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+  plugins: [
+    new HtmlWebpackPlugin({ // 打包输出HTML
+      title: 'Hello World app',  //生成html文件的标题
+      minify: { // 压缩HTML文件
+        removeComments: true, // 移除HTML中的注释
+        collapseWhitespace: true, // 删除空白符与换行符
+        minifyCSS: true// 压缩内联css
+      },
+      filename: 'index.html',  //输出的html的文件名称
+      template: path.join(__dirname, '../public/index.html')  //html模板所在的文件路径
+    }),
+  ]
+```
+
+接下来每次启动都会使用 plugin,webpack 打包后的 js 会自动注入 html 模板中
+
+### css loader
+
+以 less 为例
+
+- 安装
+
+```
+ npm install stylus stylus-loader less less-loader sass-loader node-sass css-loader style-loader -D
+```
+
+```
+ css-loader主要的作用是解析css文件, 像@import等动态语法
+ style-loader主要的作用是解析的css文件渲染到html的style标签内
+ stylus、less、sass是CSS的常见预处理器
+ stylus-loader、less-loader、sass-loader主要是将其对应的语法转换成css语法
+```
+
+- 修改`webpack.config.js`配置
+
+```
+  module: {
+    rules: [
+    {
+      test: /\.less$/,
+      use: ['style-loader', 'css-loader', 'less-loader']  //顺序需要 style->css->less
+    }]
+  }
+```
+
+### CSS Modules 样式私有化
+
+CSS Modules 会将页面中的 calss 转为一个唯一的 class 名字
+
+#### **==注意localIdentName从css-loader3.0之后变为了modules的一个属性==**
+https://webpack.js.org/loaders/css-loader/
+- 页面中class名使用对象的写法
+
+```
+import style from './style.css'
+
+class Home extends React.PureComponent{
+  render(){
+    return (
+      <div className={style.nameDiv}>
+        this is home
+      </div>
+    )
+  }
+}
+export default Home
+
+```
+- 更新css-loader方法
+```
+ // "css-loader",
+    {
+      loader:'css-loader',
+      options: {
+        modules: {
+          localIdentName: '[path][name]__[local]--[hash:base64:5]',
+        }
+      }
+    },
+```

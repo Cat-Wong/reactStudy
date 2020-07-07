@@ -19,11 +19,27 @@ module.exports = {
 
   /*babel*/
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "babel-loader"
-    }]
+    rules: [
+      {
+        test: /\.js$/,
+        use: ['babel-loader?cacheDirectory=true'],
+        include: path.join(__dirname, '../src')
+      },
+      {
+        test: /\.less$/,
+        use: ["style-loader",
+          // "css-loader",
+           {
+              loader:'css-loader',
+              options: {
+                  modules: {
+                    localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                  }
+              }
+          },
+           "less-loader", "postcss-loader"]
+      }
+    ]
   },
 
   // webpack-dev-server
@@ -50,12 +66,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      '@': resolve('src'), 
+      '@': resolve('src'),
       '&': resolve('src/components'),
-      'actions': resolve('src/redux/actions'), 
-      'reducers': resolve('src/redux/reducers'), 
-      'pages': resolve('src/pages'), 
-      'components': resolve('src/components'), 
+      'actions': resolve('src/redux/actions'),
+      'reducers': resolve('src/redux/reducers'),
+      'pages': resolve('src/pages'),
+      'components': resolve('src/components'),
       'router': resolve('src/router')
     }
   },
