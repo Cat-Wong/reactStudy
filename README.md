@@ -519,7 +519,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 CSS Modules 会将页面中的 calss 转为一个唯一的 class 名字
 
-#### ==注意localIdentName从css-loader3.0之后变为了modules的一个属性==
+==注意'localIdentName'从'css-loader3.0'之后变为了'modules'的一个属性==
 
 https://webpack.js.org/loaders/css-loader/
 
