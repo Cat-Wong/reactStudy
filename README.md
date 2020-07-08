@@ -577,11 +577,37 @@ npm install postcss-loader postcss-cssnext -D
         "less-loader","postcss-loader"]
 }
 ```
-- 更目录下增加`postcss.config.js`
+- 根目录下增加`postcss.config.js`
 ```
 module.exports = {
     plugins: {
         'postcss-cssnext': {}
     }
 };
+```
+
+### 图片的加载
+- 安装 loader
+```
+npm install url-loader file-loader -D
+```
+- `webpack.config.js`中增加图片loader
+顺便配置静态文件夹的别名assets
+```
+{
+    test: /\.(png|jpg|gif)$/,
+    use: [{
+        loader: 'url-loader',
+        options: {
+            limit: 8192
+        }
+    }]
+}
+```
+options limit 8192意思是，小于等于8K的图片会被转成base64编码，直接插入HTML中，减少HTTP请求。
+然后在页面中引入图片
+```
+import jpg from 'assets/a.jpg'
+
+<img src={jpg} style={{width: 50+'px'}}/>
 ```

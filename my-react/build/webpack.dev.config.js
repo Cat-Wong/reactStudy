@@ -29,15 +29,20 @@ module.exports = {
         test: /\.less$/,
         use: ["style-loader",
           // "css-loader",
-           {
-              loader:'css-loader',
-              options: {
-                  modules: {
-                    localIdentName: '[path][name]__[local]--[hash:base64:5]',
-                  }
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
               }
+            }
           },
-           "less-loader","postcss-loader"]
+          "less-loader", "postcss-loader"]
+      },
+      { test: /\.(png|jpg|gif)$/, 
+        use: [
+          { loader: 'url-loader', options: { limit: 8192 } }
+        ]
       }
     ]
   },
@@ -72,7 +77,8 @@ module.exports = {
       'reducers': resolve('src/redux/reducers'),
       'pages': resolve('src/pages'),
       'components': resolve('src/components'),
-      'router': resolve('src/router')
+      'router': resolve('src/router'),
+      'assets': resolve('src/assets')
     }
   },
 
