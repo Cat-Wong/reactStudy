@@ -398,7 +398,7 @@ devtool: 'inline-source-map'
 
 ```
 //=======
-//可以直接向这样些
+//可以直接向这样写
 resolve: {
     alias: {
         pages: path.join(__dirname, '../src/pages'),
@@ -541,7 +541,7 @@ class Home extends React.PureComponent{
 export default Home
 
 ```
-- 更新css-loader方法
+- 更新`webpack.config.js`中`css-loader`配置
 ```
  // "css-loader",
     {
@@ -552,4 +552,36 @@ export default Home
         }
       }
     },
+```
+
+### CSS 的 PostCSS 优化
+自动给css规则添加浏览器的前缀,解决浏览器的兼容问题
+- 安装
+
+```
+npm install postcss-loader postcss-cssnext -D
+```
+- `webpack.config.js`中增加`postcss-loader`配置
+```
+{
+  test: /\.less$/,
+    use: ["style-loader",
+      {
+        loader:'css-loader',
+        options: {
+          modules: {
+            localIdentName: '[path][name]__[local]--[hash:base64:5]',
+          }
+        }
+      },
+        "less-loader","postcss-loader"]
+}
+```
+- 更目录下增加`postcss.config.js`
+```
+module.exports = {
+    plugins: {
+        'postcss-cssnext': {}
+    }
+};
 ```

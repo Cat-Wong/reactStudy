@@ -37,7 +37,7 @@ module.exports = {
                   }
               }
           },
-           "less-loader", "postcss-loader"]
+           "less-loader","postcss-loader"]
       }
     ]
   },
